@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* width */
+::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    /* box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px; */
+    background-color: #0A192F;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {   
+    background: #013f3c7f; 
+    border-radius: 10px;
+  }
+
+i {
+    cursor: pointer;
+}
+
+i:hover {
+    color: #ffffff;
+}
+
+/*  Loader Animation  */
+
+.A {
+    animation: A 1s infinite;
+}
+
+@keyframes A {
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 0.5;
+    }
+}
+
+.T {
+    animation: T 1s infinite;
+}
+
+@keyframes T {
+    0%{
+        opacity: 0.5;
+    }
+    50%{
+        opacity: 1;
+    }
+    100%{
+        opacity: 0.5;
+    }
+}
+
+.M {
+    animation: M 1s infinite;
+}
+
+@keyframes M {
+    0%{
+        opacity: 0.5;
+    }
+    50%{
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+  
+/* Input */
+
+input , textarea{
+    height: 40px;
+    border: 1px solid grey;
+    width: 50%;
+    padding-left: 20px;
+}
+
+input:focus {
+    outline: none;
+    border: 2px solid rgb(102, 98, 98);
+}
+
+textarea {
+    height: 100px;
+    padding-top: 10px;
+}
+
+.modal-input {
+    width: 100%;
+}
