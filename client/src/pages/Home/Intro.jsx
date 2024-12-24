@@ -17,7 +17,8 @@ const Intro = () => {
         const url = window.URL.createObjectURL(new Blob([response.data],{ type : "application/pdf" }));
         const link = document.createElement('a');
         link.href = url;
-        link.setAttribute('download', link.href.split('-').slice(1).join('.pdf')); // Remove timestamp
+        link.setAttribute('download', link.href.split('-').slice(1).join('-')); // Remove timestamp
+        link.setAttribute('download', link.href.join('.pdf'));
         document.body.appendChild(link);
         link.click();
         link.remove();
