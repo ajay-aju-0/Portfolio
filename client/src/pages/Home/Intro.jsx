@@ -22,6 +22,7 @@ const Intro = () => {
         link.click();
         link.remove();
       } catch (error) {
+      console.log(error);
         message.error('Error downloading file');
       }
   };
