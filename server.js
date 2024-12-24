@@ -18,6 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
 
+const __dirname = path.resolve();
+
 
 app.use("/api/portfolio",portfolioRoute);
 
@@ -30,7 +32,7 @@ if (process.env.NODE_ENV === "production") {
 
 	// react app
 	app.get("*", (req, res) => {
-		res.sendFile(path.join(process.cwd(), "client", "dist", "index.html"));
+		res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 	});
 }
 
