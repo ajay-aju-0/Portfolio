@@ -24,7 +24,6 @@ app.use("/api/portfolio",portfolioRoute);
 // Serve static files
 app.use('/uploads', express.static('uploads'));
 
-let __dirname = path.resolve();
 
 if (process.env.NODE_ENV === "production") {
 	app.use(express.static(path.join(__dirname, "/client/dist")));
