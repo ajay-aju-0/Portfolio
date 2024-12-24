@@ -8,6 +8,7 @@ const portfolioRoute = require('./routes/portfolioRoutes');
 const cors = require("cors");
 
 const path = require("path");
+const { dir } = require('console');
 
 require('dotenv').config();
 
@@ -17,8 +18,6 @@ app.use(express.json({limit:"50mb"}));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cors());
-
-const __dirname = path.resolve();
 
 
 app.use("/api/portfolio",portfolioRoute);
