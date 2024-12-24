@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { message } from 'antd';
 
 const Intro = () => {
   const { loading, portfolioData } = useSelector((state) => state.root);
