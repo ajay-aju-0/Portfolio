@@ -14,7 +14,8 @@ const Intro = () => {
           responseType: 'blob'
         });
 
-        console.log(response.data);
+        blob = new Blob([response.data],{ type : "application/pdf" });
+      console.log(blob);
         const url = window.URL.createObjectURL(new Blob([response.data],{ type : "application/pdf" }));
         const link = document.createElement('a');
         link.href = url;
