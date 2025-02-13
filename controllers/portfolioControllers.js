@@ -316,6 +316,7 @@ const downloadFile = async (req, res) => {
     }
 
     res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'attachment; filename={file.filename}');
     res.download(filePath, file.filename, (err) => {
       if (err) {
         console.error("Error downloading file:", err);
