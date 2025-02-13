@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { message } from 'antd';
 
 const Intro = () => {
   const { loading, portfolioData } = useSelector((state) => state.root);
@@ -31,7 +32,7 @@ const Intro = () => {
       <h1 className="text-9xl sm:text-3xl text-secondary font-semibold">
         {firstname || ""} {lastname || ""}
       </h1>
-      <h1 className="text-4xl sm:text-3xl text-white font-semibold">
+      <h1 className="text-4xl sm:text-2xl text-white font-semibold">
         {caption || ""}
       </h1>
       <p className="text-white">{description || ""}</p>

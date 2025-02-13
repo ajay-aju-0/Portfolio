@@ -11,7 +11,7 @@ const About = () => {
     <div>
       <SectionTitle title="About Me" />
       <div className="flex w-full items-center sm:flex-col">
-        <div className="h-[50vh] w-1/2">
+        <div className="h-[50vh] w-1/2 sm:w-96">
           <dotlottie-player
             src= {lottieUrl}
             background="transparent"
@@ -19,7 +19,7 @@ const About = () => {
             autoplay
           ></dotlottie-player>
         </div>
-        <div className="flex flex-col gap-5 w-1/2">
+        <div className="flex flex-col w-1/2 sm:w-full sm:px-2">
           <p className="text-white">
             { description1 || '' }
           </p>
