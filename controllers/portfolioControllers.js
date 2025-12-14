@@ -254,17 +254,17 @@ const updateCertificate = async (req, res) => {
 
     const certificateId = req.body._id;
 
-    let pro = await Project.findById(certificateId);
+    let cert = await Certificate.findById(certificateId);
 
     let thumbnail = "";
 
     if (req.file) {
-        if (pro.thumbnail) {
+        if (cert.thumbnail) {
             // Delete the existing image from Cloudinary
-            const publicId = pro.thumbnail.split('/').pop().split('.')[0]; // Extract public ID from URL
+            const publicId = cert.thumbnail.split('/').pop().split('.')[0]; // Extract public ID from URL
             await cloudinary.uploader.destroy(publicId);
         }
-         const uploadedResponse = await uploadToCloudinary(req.file.buffer);
+        const uploadedResponse = await uploadToCloudinary(req.file.buffer);
         thumbnail = uploadedResponse.secure_url;
         updateData.thumbnail = thumbnail;
     }
