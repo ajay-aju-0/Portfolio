@@ -80,6 +80,10 @@ const projectSchema = new mongoose.Schema({
     technologies:{
         type: Array,
         required: true
+    },
+    thumbnail:{
+        type: String,
+        required: true
     }
 });
 
@@ -97,6 +101,10 @@ const certificateSchema = new mongoose.Schema({
         required: true
     },
     link:{
+        type: String,
+        required: true
+    },
+    thumbnail:{
         type: String,
         required: true
     }

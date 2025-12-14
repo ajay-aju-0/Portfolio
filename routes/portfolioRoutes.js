@@ -69,15 +69,15 @@ router.post("/update-experience", updateExperience);
 
 router.post("/delete-experience", deleteExperience);
 
-router.post("/add-project",addProject);
+router.post("/add-project", upload.single('file'), addProject);
 
-router.post("/update-project",updateProject);
+router.post("/update-project", upload.single('file'), updateProject);
 
 router.post("/delete-Project",deleteProject);
 
-router.post("/add-certificate",addCertificate);
+router.post("/add-certificate", upload.single('file'), addCertificate);
 
-router.post("/update-certificate",updateCertificate);
+router.post("/update-certificate", upload.single('file'), updateCertificate);
 
 router.post("/delete-certificate",deleteCertificate);
 
