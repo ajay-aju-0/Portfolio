@@ -199,7 +199,7 @@ const AdminCertificates = () => {
             <Form.Item label="Certificate Thumbnail">
               {selectedItemForEdit?.thumbnail && (
                 <img
-                  src={`${API_BASE_URL}/${selectedItemForEdit.thumbnail}`}
+                  src={selectedItemForEdit.thumbnail}
                   alt="thumbnail"
                   className="w-1/4 h-20 object-cover mb-3 rounded"
                 />
