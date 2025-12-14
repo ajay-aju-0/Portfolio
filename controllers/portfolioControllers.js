@@ -216,17 +216,20 @@ const deleteProject = async (req, res) => {
 
 const addCertificate = async (req, res) => {
   try {
+    let thumbnailImg = req.file;
+    let thumbnail = "";
+
+    if (thumbnailImg) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      thumbnail = result.secure_url;
+    }
+
     const certificate = new Certificate({
       title: req.body.title,
       organisation: req.body.organisation,
       description: req.body.description,
       link: req.body.link,
     });
-
-    // If a file is uploaded, save its path
-    if (req.file) {
-      certificate.thumbnail = `uploads/${req.file.filename}`;
-    }
 
     await certificate.save();
 
@@ -249,9 +252,21 @@ const updateCertificate = async (req, res) => {
       link: req.body.link,
     };
 
-    // If a new thumbnail is uploaded, add it to updateData
+    const certificateId = req.body._id;
+
+    let pro = await Project.findById(certificateId);
+
+    let thumbnail = "";
+
     if (req.file) {
-      updateData.thumbnail = `uploads/${req.file.filename}`;
+        if (pro.thumbnail) {
+            // Delete the existing image from Cloudinary
+            const publicId = pro.thumbnail.split('/').pop().split('.')[0]; // Extract public ID from URL
+            await cloudinary.uploader.destroy(publicId);
+        }
+         const uploadedResponse = await uploadToCloudinary(req.file.buffer);
+        thumbnail = uploadedResponse.secure_url;
+        updateData.thumbnail = thumbnail;
     }
 
     const certificate = await Certificate.findOneAndUpdate(
