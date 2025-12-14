@@ -105,7 +105,7 @@ const Projects = () => {
                   {/* Image */}
                   <div className="h-44 md:h-48 w-full overflow-hidden">
                     <img
-                      src={`${API_BASE_URL}/${p.thumbnail}`}
+                      src={p.thumbnail}
                       alt={p.thumbnail}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
@@ -204,7 +204,7 @@ const Projects = () => {
                 className="rounded-2xl overflow-hidden border border-[#15303a] bg-[#071827] shadow-md"
               >
                 <img
-                  src={`${API_BASE_URL}/${p.thumbnail}`}
+                  src={p.thumbnail}
                   alt={p.title}
                   className="w-full h-44 object-cover"
                 />

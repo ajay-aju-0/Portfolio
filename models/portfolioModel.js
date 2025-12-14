@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
 
 const introSchema = new mongoose.Schema({
     welcomeText:{
@@ -141,12 +141,10 @@ const resumeSchema = new mongoose.Schema({
 })
 
 
-module.exports = {
-    Intro: mongoose.model("intros",introSchema),
-    About: mongoose.model("about",aboutSchema),
-    Experience: mongoose.model("experience",experienceSchema),
-    Project: mongoose.model("projects",projectSchema),
-    Certificate: mongoose.model("certificates",certificateSchema),
-    Contact: mongoose.model("contact",contactSchema),
-    Resume: mongoose.model("Resume",resumeSchema)
-}
+export const Intro = mongoose.model("intros", introSchema);
+export const About = mongoose.model("about", aboutSchema);
+export const Experience = mongoose.model("experience", experienceSchema);
+export const Project = mongoose.model("projects", projectSchema);
+export const Certificate = mongoose.model("certificates", certificateSchema);
+export const Contact = mongoose.model("contact", contactSchema);
+export const Resume = mongoose.model("Resume", resumeSchema);

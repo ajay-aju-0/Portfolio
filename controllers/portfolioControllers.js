@@ -1,4 +1,4 @@
-const {
+import {
   Intro,
   About,
   Experience,
@@ -6,12 +6,33 @@ const {
   Certificate,
   Contact,
   Resume,
-} = require("../models/portfolioModel");
+} from "../models/portfolioModel.js";
 
-const User = require("../models/userModel");
+import User from "../models/userModel.js";
 
-const path = require("path");
-const fs = require("fs");
+import path from "path";
+import fs from "fs";
+import { fileURLToPath } from "url";
+import { v2 as cloudinary } from "cloudinary";
+import streamifier from "streamifier";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+const uploadToCloudinary = (fileBuffer) => {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: "projects" },
+      (error, result) => {
+        if (result) resolve(result);
+        else reject(error);
+      }
+    );
+
+    streamifier.createReadStream(fileBuffer).pipe(stream);
+  });
+};
+
 
 const getPortfolioData = async (req, res) => {
   try {
@@ -116,11 +137,17 @@ const deleteExperience = async (req, res) => {
 
 const addProject = async (req, res) => {
   try {
-    const thumbnailPath = req.file ? `uploads/${req.file.filename}` : null;
+    let thumbnailImg = req.file;
+    let thumbnail = "";
+
+    if (thumbnailImg) {
+      const result = await uploadToCloudinary(req.file.buffer);
+      thumbnail = result.secure_url;
+    }
 
     const project = new Project({
       ...req.body,
-      thumbnail: thumbnailPath,
+      thumbnail: thumbnail,
     });
 
     // const project = new Project(req.body);
@@ -141,8 +168,21 @@ const updateProject = async (req, res) => {
       ...req.body,
     };
 
+    const projectId = req.body._id;
+
+    let pro = await Project.findById(projectId);
+
+    let thumbnail = "";
+
     if (req.file) {
-      updateData.thumbnail = `uploads/${req.file.filename}`;
+        if (pro.thumbnail) {
+            // Delete the existing image from Cloudinary
+            const publicId = pro.thumbnail.split('/').pop().split('.')[0]; // Extract public ID from URL
+            await cloudinary.uploader.destroy(publicId);
+        }
+         const uploadedResponse = await uploadToCloudinary(req.file.buffer);
+        thumbnail = uploadedResponse.secure_url;
+        updateData.thumbnail = thumbnail;
     }
 
     const project = await Project.findOneAndUpdate(
@@ -268,10 +308,10 @@ const adminLogin = async (req, res) => {
   try {
     const user = await User.findOne({
       username: req.body.username,
-      password: req.body.Password,
+      password: req.body.password,
     });
 
-    user.password = "";
+    if (user) user.password = "";
 
     if (user) {
       res.status(200).send({
@@ -333,7 +373,7 @@ const downloadFile = async (req, res) => {
     res.setHeader("Content-Type", "application/pdf");
     res.setHeader(
       "Content-Disposition",
-      "attachment; filename={file.filename}"
+      `attachment; filename=${file.filename}`
     );
     res.download(filePath, file.filename, (err) => {
       if (err) {
@@ -349,7 +389,7 @@ const downloadFile = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   getPortfolioData,
   updateIntro,
   updateAbout,
