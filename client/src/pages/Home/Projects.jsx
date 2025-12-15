@@ -140,7 +140,7 @@ const Projects = () => {
                       <div className="mt-3 flex gap-3">
                         {/* <a href="#" className="text-xs font-medium px-3 py-1 bg-[#0f2b3a] rounded-md border border-[#15414d]">View</a> */}
                         <a
-                          href={`${project[selectedItemIndex].link}`}
+                          href={p.link}
                           target="_blank"
                           className="text-xs font-medium px-3 py-1 bg-[#0f2b3a] rounded-md border border-[#15414d]"
                         >
