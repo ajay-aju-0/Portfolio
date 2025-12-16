@@ -19,10 +19,13 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 
-const uploadToCloudinary = (fileBuffer) => {
+const uploadToCloudinary = (fileBuffer, folder = "projects", resourceType = "image") => {
   return new Promise((resolve, reject) => {
     const stream = cloudinary.uploader.upload_stream(
-      { folder: "projects" },
+      { 
+        folder,
+        resource_type: resourceType
+     },
       (error, result) => {
         if (result) resolve(result);
         else reject(error);
@@ -348,20 +351,25 @@ const adminLogin = async (req, res) => {
 
 const uploadFile = async (req, res) => {
   try {
+     if (!req.file || !req.file.buffer) {
+      return res.status(400).json({
+        success: false,
+        message: "No file uploaded",
+      });
+    }
+
+    const result = await uploadToCloudinary(req.file.buffer, "resumes", "raw");
+
     const newPDF = await Resume.findByIdAndUpdate(
       {
         _id: "6767fa57fe149e39ab9bb3b1",
       },
       {
-        filename: req.file.filename,
-        path: req.file.path,
+        filename: result.public_id,
+        path: result.secure_url,
       },
-      {
-        new: true,
-      }
+      { new: true, upsert: true }
     );
-
-    await newPDF.save();
 
     res.status(200).json({
       data: newPDF,
@@ -369,7 +377,7 @@ const uploadFile = async (req, res) => {
       message: "PDF uploaded successfully",
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).send(error);
   }
 };
@@ -377,28 +385,15 @@ const uploadFile = async (req, res) => {
 const downloadFile = async (req, res) => {
   try {
     const file = await Resume.findById("6767fa57fe149e39ab9bb3b1");
-    // console.log(file.filename)
-    const filePath = path.resolve(__dirname, "..", "uploads", file.filename);
-    // console.log(filePath)
-    // Check if the file exists
-    if (!fs.existsSync(filePath)) {
-      return res.status(404).send("File not found");
+  
+    if (!file || !file.path) {
+      return res.status(404).send({
+        success: false,
+        message: "File not found.",
+      });
     }
 
-    res.setHeader("Content-Type", "application/pdf");
-    res.setHeader(
-      "Content-Disposition",
-      `attachment; filename=${file.filename}`
-    );
-    res.download(filePath, file.filename, (err) => {
-      if (err) {
-        console.error("Error downloading file:", err);
-        res.status(200).send({
-          success: false,
-          message: "File not found.",
-        });
-      }
-    });
+    return res.redirect(file.path);
   } catch (error) {
     res.status(500).send(error);
   }
@@ -421,4 +416,5 @@ export {
   adminLogin,
   uploadFile,
   downloadFile,
+  
 };
