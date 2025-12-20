@@ -28,7 +28,8 @@ const Intro = () => {
   };
 
   return (
-    <div className="h-[90vh] bg-primary flex flex-col items-start justify-center gap-7 w-3/4 py-10">
+    // <div className="h-[90vh] bg-primary flex flex-col items-start justify-center gap-7 w-3/4 py-10">
+    <div className="min-h-[90vh] bg-primary flex flex-col items-start justify-center gap-7 w-full sm:w-full py-10">
       <h1 className="text-white">{welcomeText || ""}</h1>
       <h1 className="text-9xl sm:text-3xl text-secondary font-semibold">
         {firstname || ""} {lastname || ""}

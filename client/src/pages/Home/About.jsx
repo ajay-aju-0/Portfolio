@@ -11,15 +11,18 @@ const About = () => {
     <div>
       <SectionTitle title="About Me" />
       <div className="flex w-full items-center sm:flex-col">
-        <div className="h-[50vh] w-1/2 sm:w-96">
+        {/* <div className="h-[50vh] w-1/2 sm:w-96"> */}
+        <div className="h-[50vh] w-1/2 sm:w-full sm:h-60">
           <dotlottie-player
             src= {lottieUrl}
             background="transparent"
             speed="1"
             autoplay
+            className="w-full h-full object-contain"
           ></dotlottie-player>
         </div>
-        <div className="flex flex-col w-1/2 sm:w-full sm:px-2">
+        {/* <div className="flex flex-col w-1/2 sm:w-full sm:px-2"> */}
+        <div className="flex flex-col w-1/2 sm:w-full sm:px-2 mt-5 sm:mt-2">
           <p className="text-white">
             { description1 || '' }
           </p>
