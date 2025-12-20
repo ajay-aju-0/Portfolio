@@ -17,7 +17,7 @@ const Home = () => {
     <>
     <Header />
     {portfolioData && 
-        <div className='bg-primary px-40 sm:px-4'>
+        <div className='bg-primary px-40 sm:px-3'>
             <Intro />
             <About />
             <Experiences />
